@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IAS</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <link rel="stylesheet" href="css/encrypt_decrypt.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+            <img src="assets/logo.png" alt="Bulletin Logo" width="50" height="50" padding="0" class="d-inline-block align-top">
+            SecureFiles
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Main Content -->
+    <div class="container-fluid d-flex justify-content-center align-items-center mt-2" style="height: calc(100vh - 56px - 40px);">
+        <div class="row justify-content-center w-100">
+            <div class="col-lg-6 col-md-8 col-sm-10">
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h2 class="card-title">Encrypt and Decrypt a File</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="fileForm" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="file">Choose File:</label>
+                                <input type="file" class="form-control-file" id="file" name="file" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="action">Choose an action:</label>
+                                <select class="form-control" id="action" name="action" required>
+                                    <option value="encrypt">Encrypt</option>
+                                    <option value="decrypt">Decrypt</option>
+                                </select>
+                            </div>
+                            <div class="form-group position-relative">
+                                <label for="PrivateKey">Enter Private Key:</label>
+                                <input type="text" class="form-control" id="PrivateKey" name="key" required>
+                                <span class="fa fa-eye-slash" id="toggleKey"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg">Proceed</button>
+                        </form>
+                        <div id="output" style="display: none; margin-top: 20px; text-align: center;">
+                            <h5>Processed File:</h5>
+                            <a id="downloadLink" style="display: none;" download></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-4">
+        <p>&copy; 2024 SecureFiles. All rights reserved.</p>
+    </footer>
+
+    <!-- Script to toggle password visibility -->
+    <script>
+       document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('fileForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var file = document.getElementById('file').files[0];
+            var action = document.getElementById('action').value;
+
+            if (action === 'encrypt') {
+                encryptFile(file);
+            } else if (action === 'decrypt') {
+                decryptFile(file);
+            }
+        });
+
+        function encryptFile(file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var arrayBuffer = e.target.result;
+                var wordArray = CryptoJS.lib.WordArray.create(arrayBuffer);
+                var combinedKey = getEncryptionCombinedKey();
+                var encryptedContent = CryptoJS.AES.encrypt(wordArray, combinedKey).toString();
+                var blob = new Blob([encryptedContent], { type: 'application/octet-stream' });
+                displayProcessedFile(blob, file.name + '.encrypted', 'Encrypted');
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function decryptFile(file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var encryptedContent = e.target.result;
+                var combinedKey = getDecryptionCombinedKey();
+                var decryptedBytes = CryptoJS.AES.decrypt(encryptedContent, combinedKey);
+                var decryptedText = decryptedBytes.toString(CryptoJS.enc.Utf8);
+                var blob = new Blob([decryptedText], { type: 'application/octet-stream' });
+                displayProcessedFile(blob, file.name.replace('.encrypted', ''), 'Decrypted');
+            };
+            reader.readAsText(file);
+        }
+
+        function getEncryptionCombinedKey() {
+                var publicKey = "marygracedapdap123456789";
+                var key = document.getElementById('PrivateKey').value;
+                return publicKey + key;
+            }
+
+            function getDecryptionCombinedKey() {
+                var publicKey = "marygracedapdap123456789";
+                var key = document.getElementById('PrivateKey').value;
+                return publicKey + key;
+            }
+
+        function displayProcessedFile(content, fileName, actionName) {
+            var downloadLink = document.getElementById('downloadLink');
+            downloadLink.href = URL.createObjectURL(content);
+            downloadLink.download = fileName;
+            downloadLink.textContent = 'Download ' + actionName + ' File';
+            downloadLink.style.display = 'inline-block';
+
+            var outputDiv = document.getElementById('output');
+            outputDiv.style.display = 'block';
+        }
+        
+        
+    });
+    function togglePasswordVisibility(targetId, toggleIcon) {
+                const password = document.getElementById(targetId);
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+                toggleIcon.classList.toggle('fa-eye');
+                toggleIcon.classList.toggle('fa-eye-slash');
+            }
+
+            document.getElementById('toggleKey').addEventListener('click', function (e) {
+                togglePasswordVisibility('PrivateKey', this);
+            });
+
+            
+    </script>
+</body>
+</html>

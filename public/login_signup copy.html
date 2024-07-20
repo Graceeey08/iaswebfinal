@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IAS</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/login_signup.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+            <img src="assets/logo.png" alt="Bulletin Logo" width="50" height="50" padding="0" class="d-inline-block align-top">
+            SecureFiles
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Login/Register Panel -->
+    <div class="container">
+        <div class="login-reg-panel">
+            <div class="login-info-box">
+                <h2 class="colortext">Have an account?</h2>
+                <p>Lorem ipsum dolor sit amet</p>
+                <label id="label-register" for="log-reg-show">Login</label>
+                <input type="radio" name="active-log-panel" id="log-reg-show" checked="checked">
+                <input type="radio" name="active-log-panel" id="forgot-password-show">
+            </div>
+            
+            <div class="register-info-box">
+                <h2>Don't have an account?</h2>
+                <p>Lorem ipsum dolor sit amet</p>
+                <label id="label-login" for="log-login-show">Register</label>
+                <input type="radio" name="active-log-panel" id="log-login-show">
+            </div>
+            
+            <div class="white-panel">
+                <div class="login-show">
+                    <h2>LOGIN</h2>
+                    <form action="/api/login" method="post">
+                        <div class="form-group">
+                            <input type="email" name="email" placeholder="Email" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password" placeholder="Password" required id="loginPassword" class="form-control">
+                            <span class="fa fa-eye-slash" id="toggleLoginPassword"></span>
+                        </div>
+                        <input type="submit" value="Login" class="btn btn-primary">
+                    </form>
+                    <label id="forgotPasswordLink" for="forgot-password-show">Forgot password?</label>
+                    <input type="radio" name="active-log-panel" id="forgot-password-show">
+                </div>
+                <div class="register-show">
+                    <h2>REGISTER</h2>
+                    <form action="/api/register" method="post">
+                        <div class="form-group">
+                            <input type="email" name="email" placeholder="Enter Email" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password" placeholder="Password" required id="registerPassword" class="form-control">
+                            <span class="fa fa-eye-slash" id="toggleRegisterPassword"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="confirmpassword" placeholder="Confirm Password" required id="registerConfirmPassword" class="form-control">
+                            <span class="fa fa-eye-slash" id="toggleRegisterConfirmPassword"></span>
+                        </div>
+                        <input type="submit" value="Register" class="btn btn-primary">
+                    </form>
+                </div>
+                <div class="forgot-password-show">
+                    <h2>FORGOT PASSWORD</h2>
+                    <form action="/api/forgot_password" method="post">
+                        <div class="form-group">
+                            <label for="forgot-email"></label>
+                            <input type="email" class="form-control" name="email" id="forgot-email" placeholder="Enter Email">
+                        </div>
+                        <div class="d-flex justify-content-center mt-3">
+                            <button type="submit" class="btn btn-primary">Send Reset Link</button>
+                        </div>
+                        <div class="text-center mt-3">
+                            <a href="#" id="show-login-forgot">Back to Login</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector('.login-info-box').style.display = 'none';
+            document.querySelector('.login-show').classList.add('show-log-panel');
+        });
+        
+        document.querySelectorAll('.login-reg-panel input[type="radio"]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                if(document.getElementById('log-login-show').checked) {
+                    document.querySelector('.register-info-box').style.display = 'none';
+                    document.querySelector('.login-info-box').style.display = 'block';
+                    
+                    document.querySelector('.white-panel').classList.add('right-log');
+                    document.querySelector('.register-show').classList.add('show-log-panel');
+                    document.querySelector('.login-show').classList.remove('show-log-panel');
+                    document.querySelector('.forgot-password-show').classList.remove('show-log-panel');
+                }
+                else if(document.getElementById('log-reg-show').checked) {
+                    document.querySelector('.register-info-box').style.display = 'block';
+                    document.querySelector('.login-info-box').style.display = 'none';
+                    
+                    document.querySelector('.white-panel').classList.remove('right-log');
+                    
+                    document.querySelector('.login-show').classList.add('show-log-panel');
+                    document.querySelector('.register-show').classList.remove('show-log-panel');
+                    document.querySelector('.forgot-password-show').classList.remove('show-log-panel');
+                } else if (document.getElementById('forgot-password-show').checked) {
+                    document.querySelector('.register-info-box').style.display = 'none';
+                    document.querySelector('.login-info-box').style.display = 'block';
+                    
+                    document.querySelector('.white-panel').classList.add('right-log');
+                    document.querySelector('.register-show').classList.remove('show-log-panel');
+                    document.querySelector('.login-show').classList.remove('show-log-panel');
+                    document.querySelector('.forgot-password-show').classList.add('show-log-panel');
+                }
+            });
+        });
+
+        // Function to toggle password visibility
+        function togglePasswordVisibility(targetId, toggleIcon) {
+            const password = document.getElementById(targetId);
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            toggleIcon.classList.toggle('fa-eye');
+            toggleIcon.classList.toggle('fa-eye-slash');
+        }
+
+        // Event listeners for toggle icons
+        document.getElementById('toggleNewPassword').addEventListener('click', function (e) {
+            togglePasswordVisibility('newpassword', this);
+        });
+
+        document.getElementById('toggleNewConfirmPassword').addEventListener('click', function (e) {
+            togglePasswordVisibility('newconfirmpassword', this);
+        });
+
+        document.getElementById('toggleRegisterPassword').addEventListener('click', function (e) {
+            togglePasswordVisibility('registerPassword', this);
+        });
+
+        document.getElementById('toggleRegisterConfirmPassword').addEventListener('click', function (e) {
+            togglePasswordVisibility('registerConfirmPassword', this);
+        });
+
+        document.getElementById('toggleLoginPassword').addEventListener('click', function (e) {
+            togglePasswordVisibility('loginPassword', this);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/encrypt_decrypt.css">
+    <style>
+        .centered-card {
+            height: 87vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .card-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ec3014;
+        }
+
+        .form-control {
+            margin-bottom: 1rem;
+            width: 400px;
+        }
+
+        .btn-primary {
+            background-color: #ec3014;
+            border-color: #ec3014;
+        }
+
+        .btn-primary:hover {
+            background-color: #bf2710;
+            border-color: #bf2710;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+            <img src="assets/logo.png" alt="Bulletin Logo" width="50" height="50" padding="0" class="d-inline-block align-top">
+            SecureFiles
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">About</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container centered-card">
+        <div class="card p-4 mt-5">
+            <div class="card-body">
+                <h1 class="card-title text-center">Contact Us</h1>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea name="message" id="message" class="form-control" rows="5" required></textarea>
+                    </div>
+                    <div class="text-center">
+                        <input type="submit" value="Send Message" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <p>&copy; 2024 SecureFiles. All rights reserved.</p>
+    </footer>
+
+    <script>
+        $(document).ready(function() {
+            $('#contactForm').on('submit', function(event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/contact',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        // Display success message
+                        alert(response.message || 'Email sent successfully!');
+                    },
+                    error: function(xhr) {
+                        // Display error message
+                        var errorMessage = xhr.responseJSON && xhr.responseJSON.message 
+                                            ? xhr.responseJSON.message 
+                                            : 'Error sending email';
+                        alert(errorMessage);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

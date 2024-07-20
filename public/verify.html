@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulletin</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/login_signup.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+            <img src="assets/logo.png" alt="Bulletin Logo" width="50" height="50" padding="0" class="d-inline-block align-top">
+            SecureFiles
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-5"  style="max-width: 600px; ">
+        <div id="verify-card" class="card">
+            <div class="card-header">Email Verification</div>
+            <div class="card-body">
+                <p>An OTP has been sent to your email. Please enter it below to verify your account.</p>
+                <form id="verifyForm">
+                    <div class="form-group">
+                        <label for="otp">OTP</label>
+                        <input type="text" class="form-control" name="otp" id="otp" placeholder="Enter OTP" required>
+                    </div>
+                    <div class="d-flex justify-content-center mt-3">
+                        <button type="submit" class="btn btn-primary">Verify</button>
+                    </div>
+                </form>
+                <div id="message" class="text-center mt-3"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('verifyForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const otp = document.getElementById('otp').value;
+
+            try {
+                const response = await fetch('/api/verify', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ otp })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert(result.message);
+                    window.location.href = "/login_signup";
+                } else {
+                    document.getElementById('message').innerHTML = `Error: ${result.message}`;
+                }
+            } catch (error) {
+                document.getElementById('message').innerHTML = `Error: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>

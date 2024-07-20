@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/login_signup.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Mukta');
+        body {
+            font-family: 'Mukta', sans-serif;
+            height: 100%;
+            min-height: 100vh;
+            background-image: url('assets/background.gif');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .navbar {
+            display: flex;
+            background-color: rgba(236, 48, 20, 0.9);
+            color: white;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            display: block;
+        }
+        .navbar a:hover {
+            background-color: #575757;
+        }
+        a {
+            text-decoration: none;
+            color: #444444;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .centered-card {
+            min-height: 65vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .card-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ec3014; /* Custom color for title */
+        }
+        .card-text {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+        .card-text strong {
+            color: #ec3014; /* Custom color for strong text */
+        }
+        .list-unstyled {
+            padding-left: 0;
+        }
+        .list-unstyled li {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .list-unstyled li i {
+            color: #ec3014; /* Custom color for icons */
+            margin-right: 0.5rem;
+        }
+        footer {
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            position: relative;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+            <img src="assets/logo.png" alt="Bulletin Logo" width="50" height="50" padding="0" class="d-inline-block align-top">
+            SecureFiles
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="about.html">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- About Section -->
+    <div class="container centered-card">
+        <div class="card text-center">
+            <div class="card-body">
+                <h1 class="card-title">About Us</h1>
+                <p class="card-text">
+                    Welcome to SecureFiles! We specialize in providing cutting-edge encryption services to protect your valuable data. Our mission is to ensure that your files are secure and protected from unauthorized access.
+                </p>
+                <p class="card-text">
+                    <strong>Our Services Include:</strong>
+                </p>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-lock"></i> File Encryption</li>
+                    <li><i class="fas fa-shield-alt"></i> Secure Data Storage</li>
+                    <li><i class="fas fa-key"></i> Key Management</li>
+                    <li><i class="fas fa-user-shield"></i> User Authentication</li>
+                </ul>
+                <p class="card-text">
+                    At SecureFiles, we leverage the latest encryption technologies to create a secure environment for your data. Whether you are an individual or a business, our services are designed to meet your specific needs.
+                </p>
+                <p class="card-text">
+                    <strong>Contact Us:</strong> <br>
+                    Feel free to <a href="contact.html">reach out</a> to us for more information or to get started with our services.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <p>&copy; 2024 SecureFiles. All rights reserved.</p>
+    </footer>
+</body>
+</html>
