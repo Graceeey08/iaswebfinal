@@ -13,10 +13,10 @@ const router = express.Router();
   
 //Database connection
 const pool = new Pool({
-    host: process.env.PG_HOST || 'dpg-cq7k6i5ds78s73d8fccg-a',
-    user: process.env.PG_USER || 'iaswebpage_user',
-    password: process.env.PG_PASSWORD || 'JqaiElt5jmcURnjyNYxm5K6gUUdfj3dA',
-   database: process.env.PG_DATABASE || 'iaswebpage',
+    host: process.env.PG_HOST || 'dpg-cq6uvq6ehbks73979070-a',
+    user: process.env.PG_USER || 'iaswebactivity_user',
+    password: process.env.PG_PASSWORD || 'c1o0pK4As2yP6yWHZIf0ma1n0mUjU8Rs',
+   database: process.env.PG_DATABASE || 'iaswebactivity',
    port: parseInt(process.env.PG_PORT, 10) || 5432
 });
 
