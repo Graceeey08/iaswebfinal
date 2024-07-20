@@ -105,7 +105,7 @@ function encryptFile(filePath, privateKey) {
             const combinedKey = 'marygracedapdap123456789' + privateKey;
             const encryptedContent = CryptoJS.AES.encrypt(wordArray, combinedKey).toString();
             const encryptedFilePath = `${filePath}.encrypted`;
-            fs.writeFile(encryptedFilePath, encryptedContent, (err) => {
+            fs.writeFile(encryptedFilePath, encryptedContent, 'utf8', (err) => {
                 if (err) return reject(err);
                 resolve(encryptedFilePath);
             });
